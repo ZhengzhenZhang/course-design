@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"eClock.obj" 
+TO "eClock" 
+RAMSIZE(256) 

@@ -1,0 +1,481 @@
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE ECLOCK
+OBJECT MODULE PLACED IN eClock.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE eClock.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h> 
+   2          #include <intrins.h>
+   3          #include <myHead.h>
+   4          
+   5          int main()    
+   6          {
+   7   1              // 初始化数据函数
+   8   1              InitData();                                             
+   9   1              
+  10   1              while(1) {
+  11   2                      // 读取时间并判断闹铃是否到来
+  12   2                      ReadTimeAndJudgeAlarmArrival();
+  13   2                      
+  14   2                      switch (mainLoop) {
+  15   3      
+  16   3                      case 0:
+  17   3                              display_time();
+  18   3                              break;
+  19   3                      case 1:
+  20   3                              display_data();
+  21   3                              break;
+  22   3                      case 2:
+  23   3                              display_alarm();
+  24   3                              break;
+  25   3                      case 3:
+  26   3                              display_sWatch();
+  27   3                              break; 
+  28   3      
+  29   3                      /********************继续添加功能***********************/
+  30   3                      } 
+  31   2      
+  32   2                      KeyScan();
+  33   2              }
+  34   1      
+  35   1              return 0;
+  36   1      }
+  37          
+  38          void Key_Main() {
+  39   1              // 如果刚进入修改状态
+  40   1              if (!isModify) {                        
+  41   2                      isModify = 1;
+  42   2                      if (0 == mainLoop)                      // 如果为时间
+  43   2                              mFlag = 2;
+  44   2                      else if (1 == mainLoop)         // 如果为日期
+  45   2                              mFlag = 6;
+  46   2                      else if (2 == mainLoop)         // 如果为闹铃
+  47   2                              mFlag = 3;
+  48   2                      else if (3 == mainLoop) {       // 如果秒表
+  49   3                              sWatchFlag = 0;
+  50   3                      }
+  51   2                      /********************继续添加功能***********************/
+  52   2                      return;
+  53   2              }
+  54   1              // 如果主菜单是时间
+  55   1              if (0 == mainLoop) {                    
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 2   
+
+  56   2                      mFlag--;                                        // 循环时分
+  57   2                      if (mFlag <= 0)
+  58   2                              mFlag = 2;
+  59   2                      return;
+  60   2              }
+  61   1              // 如果主菜单是日期
+  62   1              if (1 == mainLoop) {
+  63   2                      if (6 == mFlag) mFlag--;
+  64   2                      mFlag--;
+  65   2                      if (mFlag <= 2)
+  66   2                              mFlag = 6;
+  67   2                      return;
+  68   2              }
+  69   1              // 如果主菜单是闹铃
+  70   1              if (2 == mainLoop) {
+  71   2                      mFlag++;
+  72   2                      if (mFlag >= 4)
+  73   2                              mFlag = 0;
+  74   2                      return;
+  75   2              }
+  76   1              // 如果主菜单是秒表
+  77   1              if (3 == mainLoop) {
+  78   2                      if (!isWatch) {
+  79   3                              if (sWatchFlag != 0)
+  80   3                                      return;
+  81   3                              sWatchNum = 0;
+  82   3                      }
+  83   2                      isWatch = 1;
+  84   2                      sWatchNum++;
+  85   2                      if (sWatchNum > SWATCHNUM) {
+  86   3                              isWatch = 0;
+  87   3                              sWatchFlag = 1;
+  88   3                              sWatchNum--;
+  89   3                              return;
+  90   3                      }
+  91   2                      sWatchFlag = sWatchNum;
+  92   2                      sWatch[sWatchNum][0] = sWatch[sWatchNum-1][0];
+  93   2                      sWatch[sWatchNum][1] = sWatch[sWatchNum-1][1];
+  94   2                      sWatch[sWatchNum][2] = sWatch[sWatchNum-1][2];
+  95   2                      return;
+  96   2              }
+  97   1      
+  98   1              /********************继续添加功能***********************/
+  99   1      }
+ 100          
+ 101          void Key_Up() {
+ 102   1              if (!isModify) {                                // 如果不是修改状态
+ 103   2                      mainLoop++;
+ 104   2                      return;
+ 105   2              }
+ 106   1              // 向上调节时间
+ 107   1              if (0 == mainLoop) {                    
+ 108   2                      l_tmpdate[mFlag]++;
+ 109   2                      if (2==mFlag && l_tmpdate[2]>=24)
+ 110   2                              l_tmpdate[2] = 0;
+ 111   2                      else if (1==mFlag && l_tmpdate[1]>=60)
+ 112   2                              l_tmpdate[1] = 0;
+ 113   2                      return;
+ 114   2              }
+ 115   1              // 向上调节日期
+ 116   1              if (1 == mainLoop) {                    
+ 117   2                      l_tmpdate[mFlag]++;
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 3   
+
+ 118   2                      if (6==mFlag && l_tmpdate[6]>=100)
+ 119   2                              l_tmpdate[6] = 0;
+ 120   2                      else if (4==mFlag && l_tmpdate[4]>=13)
+ 121   2                              l_tmpdate[4] = 1;
+ 122   2                      else if (3==mFlag && l_tmpdate[3]>=32)
+ 123   2                              l_tmpdate[3] = 1;
+ 124   2                      return; 
+ 125   2              }
+ 126   1      
+ 127   1              // 向上调节闹铃
+ 128   1              if (2 == mainLoop) {
+ 129   2                      if (3 == mFlag)                 // 如果处于选闹铃
+ 130   2                              alarmNum++;     
+ 131   2                      else                                    // 如果处于调节闹铃
+ 132   2                              alarm[alarmNum][mFlag]++;
+ 133   2      
+ 134   2                      if (3==mFlag && alarmNum>=ALARMNUM)
+ 135   2                              alarmNum = 0;
+ 136   2                      if (1==mFlag && alarm[alarmNum][1]>=24)
+ 137   2                              alarm[alarmNum][1] = 0;
+ 138   2                      else if (2==mFlag && alarm[alarmNum][2]>=60)
+ 139   2                              alarm[alarmNum][2] = 0;
+ 140   2                      else if (0==mFlag && alarm[alarmNum][0]>=3)      // 闹铃状态调节
+ 141   2                              alarm[alarmNum][0] = 0;
+ 142   2                      return; 
+ 143   2              }
+ 144   1              // 向上调节秒表
+ 145   1              if (3 == mainLoop) {
+ 146   2                      sWatchFlag++;
+ 147   2                      if (sWatchFlag > sWatchNum)
+ 148   2                              sWatchFlag = 0;
+ 149   2                      return; 
+ 150   2              }
+ 151   1              /********************继续添加功能***********************/
+ 152   1      }
+ 153          
+ 154          void Key_Down() {
+ 155   1              if (!isModify) {
+ 156   2                      mainLoop--;
+ 157   2                      return;
+ 158   2              }
+ 159   1              // 向下调节时间
+ 160   1              if (0 == mainLoop) {
+ 161   2                      if (l_tmpdate[mFlag] > 0) {
+ 162   3                              l_tmpdate[mFlag]--;
+ 163   3                              return;
+ 164   3                      }
+ 165   2                      if (2==mFlag && l_tmpdate[2]<=0)
+ 166   2                              l_tmpdate[2] = 23;
+ 167   2                      else if (1==mFlag && l_tmpdate[1]<=0)
+ 168   2                              l_tmpdate[1] = 59;
+ 169   2                      return;
+ 170   2              }
+ 171   1              // 向下调节日期
+ 172   1              if (1 == mainLoop) {
+ 173   2                      if (l_tmpdate[mFlag] > 1 && mFlag!=6) {
+ 174   3                              l_tmpdate[mFlag]--;
+ 175   3                              return;
+ 176   3                      }
+ 177   2                      if (l_tmpdate[mFlag] > 0 && mFlag == 6) {
+ 178   3                              l_tmpdate[mFlag]--;
+ 179   3                              return;
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 4   
+
+ 180   3                      }
+ 181   2                      if (6==mFlag && l_tmpdate[6]<=0)
+ 182   2                              l_tmpdate[6] = 99;
+ 183   2                      else if (4==mFlag && l_tmpdate[4]<=1)
+ 184   2                              l_tmpdate[4] = 12;
+ 185   2                      else if (3==mFlag && l_tmpdate[3]<=1)
+ 186   2                              l_tmpdate[3] = 31;
+ 187   2                      return;
+ 188   2              }
+ 189   1              // 向下调节闹铃
+ 190   1              if (2 == mainLoop) {
+ 191   2                      if (3==mFlag && alarmNum>0) {                           // 如果处于选闹铃状态
+ 192   3                              alarmNum--;     
+ 193   3                              return;
+ 194   3                      }
+ 195   2                      else if (alarm[alarmNum][mFlag]>0) {    // 如果处于调节闹铃状态
+ 196   3                              alarm[alarmNum][mFlag]--;
+ 197   3                              return;
+ 198   3                      }
+ 199   2                      if (3==mFlag && alarmNum<=0)
+ 200   2                              alarmNum = ALARMNUM-1;
+ 201   2                      else if (1==mFlag && alarm[alarmNum][1]<=0)
+ 202   2                              alarm[alarmNum][1] = 23;
+ 203   2                      else if (2==mFlag && alarm[alarmNum][2]<=0)
+ 204   2                              alarm[alarmNum][2] = 59;
+ 205   2                      else if (0==mFlag && alarm[alarmNum][0]<=0)
+ 206   2                              alarm[alarmNum][0] = 2;
+ 207   2                      return;
+ 208   2              }
+ 209   1              // 向下调节秒表
+ 210   1              if (3 == mainLoop) {
+ 211   2                      if (sWatchFlag > 0) {
+ 212   3                              sWatchFlag--;
+ 213   3                              return;
+ 214   3                      }
+ 215   2                      if (sWatchFlag <= 0)
+ 216   2                              sWatchFlag = sWatchNum;
+ 217   2                      return; 
+ 218   2              }
+ 219   1      
+ 220   1              /********************继续添加功能***********************/
+ 221   1      }
+ 222          
+ 223          void Key_Back() {
+ 224   1              uChar i;
+ 225   1              if (!isModify) {
+ 226   2                      mainLoop = 0;
+ 227   2                      for (i=0; i<ALARMNUM; i++) {
+ 228   3                              if (isAlarm[i]) {                       // 如果闹铃正在响则关闭
+ 229   4                                      isAlarm[i] = 0;
+ 230   4                                      if (1 == alarm[i][0])   // 如果闹铃为单一状态则设为关闭状态
+ 231   4                                              alarm[i][0] = 0;
+ 232   4                              }
+ 233   3                      }
+ 234   2                      alarmNum = 0;
+ 235   2                      beep = 1;       // 按返回键关闭闹铃
+ 236   2                      return;
+ 237   2              }
+ 238   1              if (0 == mainLoop) {    // 如果为设定时间
+ 239   2                      isModify = 0;
+ 240   2                      Set_RTC();
+ 241   2                      return; 
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 5   
+
+ 242   2              }
+ 243   1              if (1 == mainLoop) {    // 如果为设定日期
+ 244   2                      isModify = 0;
+ 245   2                      l_tmpdate[5] = GetWeek(l_tmpdate[6], l_tmpdate[4], l_tmpdate[3]);
+ 246   2                                                              // 得到星期
+ 247   2                      Set_RTC();
+ 248   2                      return; 
+ 249   2              }       
+ 250   1              if (2 == mainLoop) {
+ 251   2                      isModify = 0;
+ 252   2                      return;
+ 253   2              }
+ 254   1              if (3 == mainLoop) {  // 如果为秒表
+ 255   2                      if (isWatch) {
+ 256   3                              sWatchFlag = 1;
+ 257   3                              isWatch = 0;
+ 258   3                              return;
+ 259   3                      }
+ 260   2                      isModify = 0;
+ 261   2                      sWatchFlag = 0;
+ 262   2                      return;
+ 263   2              }
+ 264   1      
+ 265   1              /********************继续添加功能***********************/
+ 266   1      }
+ 267          
+ 268          // 调整闪烁函数
+ 269          #define XTIM 180
+ 270          xdata uInt fx = 0; // 用于闪烁记数
+ 271          void Flicker(uChar i) {
+ 272   1              fx++;
+ 273   1              if (!isModify) {
+ 274   2                      P0 = table[l_tmpdisplay[i]];                    //查表法得到要显示数字的数码段
+ 275   2                      return;
+ 276   2              }
+ 277   1              // 时间闪烁
+ 278   1              if (0 == mainLoop) {                                            
+ 279   2                      if (fx < XTIM)  
+ 280   2                      {
+ 281   3                              if (2==mFlag && (0==i||1==i))           // 如果为小时
+ 282   3                                      P0 = 0;
+ 283   3                              else if (1==mFlag && (3==i||4==i))      // 如果为分钟
+ 284   3                                      P0 = 0;
+ 285   3                              else
+ 286   3                                      P0 = table[l_tmpdisplay[i]];
+ 287   3                      }
+ 288   2                      else if (fx < XTIM*2)
+ 289   2                              P0 = table[l_tmpdisplay[i]];
+ 290   2                      else {
+ 291   3                              P0 = table[l_tmpdisplay[i]];
+ 292   3                              fx = 0;
+ 293   3                      }
+ 294   2                      return;
+ 295   2              }
+ 296   1              // 日期闪烁
+ 297   1              if (1 == mainLoop) {                                            
+ 298   2                      if (fx < XTIM)  
+ 299   2                      {
+ 300   3                              if (6==mFlag && (0==i||1==i))   // 如果为年
+ 301   3                                      P0 = 0;
+ 302   3                              else if (4==mFlag && (2==i||3==i))                      // 如果为月
+ 303   3                                      P0 = 0;
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 6   
+
+ 304   3                              else if (3==mFlag && (4==i||5==i))                      // 如果为日
+ 305   3                                      P0 = 0;
+ 306   3                              else
+ 307   3                                      P0 = table[l_tmpdisplay[i]];
+ 308   3                      }
+ 309   2                      else if (fx < XTIM*2)
+ 310   2                              P0 = table[l_tmpdisplay[i]];
+ 311   2                      else {
+ 312   3                              P0 = table[l_tmpdisplay[i]];
+ 313   3                              fx = 0;
+ 314   3                      }
+ 315   2                      return;
+ 316   2              }
+ 317   1      
+ 318   1              // 闹铃闪烁
+ 319   1              if (2 == mainLoop) {                                            
+ 320   2                      if (fx < XTIM)  
+ 321   2                      {
+ 322   3                              if (3==mFlag && 1==i)                           // 如果选闹铃
+ 323   3                                      P0 = 0;
+ 324   3                              else if (1==mFlag && (3==i||4==i))      // 如果为小时
+ 325   3                                      P0 = 0;
+ 326   3                              else if (2==mFlag && (6==i||7==i))      // 如果为分钟
+ 327   3                                      P0 = 0;
+ 328   3                              else if (0==mFlag && 0==i)                      // 如果为状态
+ 329   3                                      P0 = 0;
+ 330   3                              else
+ 331   3                                      P0 = table[l_tmpdisplay[i]];
+ 332   3                      }
+ 333   2                      else if (fx < XTIM*2)
+ 334   2                              P0 = table[l_tmpdisplay[i]];
+ 335   2                      else {
+ 336   3                              P0 = table[l_tmpdisplay[i]];
+ 337   3                              fx = 0;
+ 338   3                      }
+ 339   2                      return;
+ 340   2              }
+ 341   1              // 秒表
+ 342   1              if (3 == mainLoop) {
+ 343   2                      if (fx < XTIM && (0==i||1==i))  
+ 344   2                      {
+ 345   3                              P0 = 0;
+ 346   3                      }
+ 347   2                      else if (fx < XTIM*2)
+ 348   2                              P0 = table[l_tmpdisplay[i]];
+ 349   2                      else {
+ 350   3                              P0 = table[l_tmpdisplay[i]];
+ 351   3                              fx = 0;
+ 352   3                      }
+ 353   2                      return;
+ 354   2              }
+ 355   1              /********************继续添加功能***********************/
+ 356   1      }
+ 357          
+ 358          // 判断闹铃
+ 359          #define ATIM 100
+ 360          xdata uChar ax = 0;
+ 361          xdata uChar aNum = 0;
+ 362          void JudgeAlarm() {
+ 363   1              uChar i;
+ 364   1              for (i=0; i<ALARMNUM; i++)
+ 365   1                      if (isAlarm[i])
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 7   
+
+ 366   1                              break;
+ 367   1              if (i == ALARMNUM)
+ 368   1                      return;
+ 369   1      
+ 370   1              ax++;
+ 371   1              if (ax < ATIM)
+ 372   1                      beep = 0;
+ 373   1              else if (ax < 2*ATIM) {
+ 374   2                      beep = 1;
+ 375   2                      P0  = 0;                                // 随着闹铃屏幕闪烁
+ 376   2              }
+ 377   1              else  {
+ 378   2                      ax = 0;
+ 379   2                      aNum++;
+ 380   2              }
+ 381   1      
+ 382   1              if (aNum > 20)  {                       // 如果响够20次自动关闭
+ 383   2                      aNum = 0;
+ 384   2                      for (i=0; i<ALARMNUM; i++)
+ 385   2                              if (isAlarm[i]) {                       // 如果闹铃正在响则关闭
+ 386   3                                      isAlarm[i] = 0;
+ 387   3                                      if (1 == alarm[i][0])   // 如果闹铃为单一状态则设为关闭状态
+ 388   3                                              alarm[i][0] = 0;
+ 389   3                              }
+ 390   2                      beep = 1;
+ 391   2              }
+ 392   1      }
+ 393          
+ 394          // 判断秒表
+ 395          xdata uChar sNum = 0;
+ 396          void JudgeSWatch() {                    // 判断是否秒表
+ 397   1              if (!isWatch)                           // 如果不是开始计数就返回
+ 398   1                      return;
+ 399   1      
+ 400   1              sNum++;
+ 401   1              if (sNum >= 4) {
+ 402   2                      sNum = 0;
+ 403   2                      sWatch[sWatchNum][2]++;
+ 404   2                      sWatch[sWatchNum][1] += sWatch[sWatchNum][2]/100;
+ 405   2                      sWatch[sWatchNum][2] %= 100;
+ 406   2                      sWatch[sWatchNum][0] += sWatch[sWatchNum][1]/60;
+ 407   2                      sWatch[sWatchNum][1] %= 60;
+ 408   2                      sWatch[sWatchNum][0] %= 60;
+ 409   2              }       
+ 410   1      }
+ 411          
+ 412          // 显示函数
+ 413          xdata uChar iCount = 0, iNum = 0;
+ 414          void Display() interrupt 1 using 1
+ 415          // 中断，用于数码管扫描
+ 416          {       
+ 417   1              // 2.5ms
+ 418   1              TH0 = 0xf7;             
+ 419   1              TL0 = 0x00;
+ 420   1      
+ 421   1              // 消除重影     
+ 422   1              P0 = 0;  
+ 423   1      
+ 424   1              // 实现数码管位选
+ 425   1              LS138A = (iCount) & 0x01;
+ 426   1              LS138B = (iCount>>1) & 0x01;
+ 427   1              LS138C = (iCount>>2) & 0x01;
+C51 COMPILER V8.18   ECLOCK                                                                01/17/2013 20:53:21 PAGE 8   
+
+ 428   1         
+ 429   1              Flicker(iCount);
+ 430   1              JudgeAlarm();                           // 判断是否闹铃
+ 431   1              JudgeSWatch();                          // 判断是否秒表
+ 432   1      
+ 433   1              iCount++;
+ 434   1              if(iCount >= 8)
+ 435   1              {
+ 436   2                      iCount = 0;
+ 437   2                      iNum++;
+ 438   2                      if(iNum>=10)                    // 隔段时间读取1302的数据。时间间隔可以调整
+ 439   2                      {
+ 440   3                              ReadRTC_Flag = 1;       // 使用标志位判断
+ 441   3                              iNum = 0;
+ 442   3                      }
+ 443   2              }
+ 444   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3018    ----
+   CONSTANT SIZE    =     37    ----
+   XDATA SIZE       =    208    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     26      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,521 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\CenterServer.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""          // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\CenterServer.ico"
+IDR_CenterServerTYPE    ICON                    "res\\CenterServerDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_BITMAP_LOGIN        BITMAP                  "res\\Login.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  29, 29
+BEGIN
+    BUTTON      ID_MYMENU_ADDNEW
+    SEPARATOR
+    BUTTON      ID_MYMENU_ADD
+    BUTTON      ID_MYMENU_MODIFY
+    BUTTON      ID_MYMENU_DELETE
+    SEPARATOR
+    BUTTON      ID_MY_PATIENT
+    BUTTON      ID_MY_DIAG
+    BUTTON      ID_MY_COMBOBOX
+    SEPARATOR
+    BUTTON      ID_MY_SEARCH
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "操作(&O)"
+    BEGIN
+        MENUITEM "添加新患者(&N)\tCtrl+N",           ID_MYMENU_ADDNEW
+        MENUITEM "添加就诊信息(&A)\tCtrl+A",          ID_MYMENU_ADD
+        MENUITEM SEPARATOR
+        MENUITEM "修改选中信息(&M)\tCtrl+M",          ID_MYMENU_MODIFY
+        MENUITEM "删除选中信息\tDelete",              ID_MYMENU_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
+    END
+    POPUP "信息列表(&I)"
+    BEGIN
+        MENUITEM "患者信息(&P)\tCtrl+P",            ID_MY_PATIENT
+        MENUITEM "就诊信息(&D)\tCtrl+G",            ID_MY_DIAG
+    END
+    POPUP "视图(&V)"
+    BEGIN
+        MENUITEM "工具栏(&T)",                     ID_VIEW_TOOLBAR
+        MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
+    END
+    POPUP "远程连接"
+    BEGIN
+        MENUITEM "配置端口",                        ID_MYMENU_CONFIGPORT
+        MENUITEM SEPARATOR
+        MENUITEM "建立患者监听",                      ID_PATIENT_LISTEN
+    END
+    POPUP "帮助(&H)"
+    BEGIN
+        MENUITEM "关于 CenterServer(&A)...",      ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "X",            ID_APP_EXIT,            VIRTKEY, ALT, NOINVERT
+    "G",            ID_MY_DIAG,             VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_MY_PATIENT,          VIRTKEY, CONTROL, NOINVERT
+    "A",            ID_MYMENU_ADD,          VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_MYMENU_ADDNEW,       VIRTKEY, CONTROL, NOINVERT
+    "M",            ID_MYMENU_MODIFY,       VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 CenterServer"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "CenterServer, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2012",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_DIALOG_PATIENT DIALOGEX 0, 0, 487, 297
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "患者就诊信息"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_PNAME,56,19,70,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PSEX,171,19,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PNUM,56,39,70,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PAGE,171,39,29,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PID,56,59,99,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PPHONE,56,78,100,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PADDR,56,98,144,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PALLERGY,56,118,144,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PREMARK,56,136,144,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_DDID,266,39,65,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DDECLARE,266,59,207,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_DINITCHECK,266,91,207,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_DINSTRUCHECK,266,123,207,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_DRESULT,266,155,207,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_DSCHEME,266,187,207,64,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_DREMARK,266,254,207,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_EDIT_FDRUG,14,203,25,14,ES_CENTER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FDIAG,39,203,25,14,ES_CENTER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FTRANS,64,203,25,14,ES_CENTER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FCHECK,89,203,25,14,ES_CENTER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FCONSUM,114,203,25,14,ES_CENTER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FRADIATE,139,203,25,14,ES_CENTER | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_TOTALFEE,164,203,38,14,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT_FEEDBACK,58,225,144,28,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    DEFPUSHBUTTON   "修改",ID_BUTTON_MODSAVE,30,276,50,14
+    PUSHBUTTON      "确定",ID_BUTTON_OKCANCEL,96,276,50,14
+    GROUPBOX        "患者基本信息",IDC_STATIC,7,7,200,164
+    LTEXT           "姓名：",IDC_STATIC,14,22,25,8
+    LTEXT           "性别：",IDC_STATIC,145,22,25,8
+    LTEXT           "医保编号：",IDC_STATIC,14,42,41,8
+    LTEXT           "年龄：",IDC_STATIC,145,42,25,8
+    LTEXT           "身份证号：",IDC_STATIC,14,62,41,8
+    LTEXT           "联系电话：",IDC_STATIC,14,82,41,8
+    LTEXT           "家庭住址：",IDC_STATIC,14,102,41,8
+    LTEXT           "过敏史：",IDC_STATIC,14,122,33,8
+    LTEXT           "备注：",IDC_STATIC,14,137,25,8
+    COMBOBOX        IDC_COMBO_DTIME,266,20,87,131,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "就诊信息",IDC_STATIC,217,7,263,283
+    EDITTEXT        IDC_EDIT_DNUM,408,39,65,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "就诊时间：",IDC_STATIC,224,22,41,8
+    LTEXT           "医生编号：",IDC_STATIC,224,42,41,8
+    LTEXT           "就诊编号：",IDC_STATIC,366,42,41,8
+    LTEXT           "患者自述：",IDC_STATIC,224,61,41,8
+    LTEXT           "初步检查：",IDC_STATIC,224,93,41,8
+    LTEXT           "器械检查：",IDC_STATIC,224,125,41,8
+    LTEXT           "诊断结果：",IDC_STATIC,224,157,41,8
+    LTEXT           "治疗方案：",IDC_STATIC,224,189,41,8
+    LTEXT           "就诊备注：",IDC_STATIC,224,256,41,8
+    GROUPBOX        "费用信息和恢复情况",IDC_STATIC,7,176,199,85
+    LTEXT           "恢复情况：",IDC_STATIC,14,227,41,8
+    LTEXT           "总计",IDC_STATIC,174,191,17,8
+    LTEXT           "中西药",IDC_STATIC,15,191,25,8
+    LTEXT           "治疗",IDC_STATIC,45,191,17,8
+    LTEXT           "输血",IDC_STATIC,69,191,17,8
+    LTEXT           "检查",IDC_STATIC,93,191,17,8
+    LTEXT           "耗材",IDC_STATIC,118,191,17,8
+    LTEXT           "放射",IDC_STATIC,144,191,17,8
+    LTEXT           "2012-12-22 00:00:00",IDC_STATIC_TIME,401,23,70,8
+    LTEXT           "时间格式：",IDC_STATIC,359,23,41,8
+END
+
+IDD_DIALOG_LOGIN DIALOGEX 0, 0, 214, 143
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "管理员登录"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         135,IDC_STATIC_LOGBMP,"Static",SS_BITMAP,0,0,215,144
+    EDITTEXT        IDC_EDIT_ADMINID,43,88,56,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ADMINPAS,145,88,56,14,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "确定",IDOK,89,119,50,14
+    PUSHBUTTON      "取消",IDCANCEL,151,119,50,14
+END
+
+IDD_DIALOG_CONFIGPORT DIALOGEX 0, 0, 225, 131
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "配置端口"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,95,110,50,14
+    PUSHBUTTON      "取消",IDCANCEL,149,110,50,14
+    LTEXT           "本机IP",IDC_STATIC_HOSTIP,41,31,108,8
+    EDITTEXT        IDC_EDIT_REGPORT,23,76,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DOCPORT,90,76,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FEEPORT,157,76,40,14,ES_AUTOHSCROLL
+    LTEXT           "医生客户端",IDC_STATIC,89,55,41,8
+    LTEXT           "登录客户端",IDC_STATIC,23,55,41,8
+    LTEXT           "计费客户端",IDC_STATIC,156,55,41,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "CenterServer.exe"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "CenterServer.exe"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_DIALOG_PATIENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 480
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 290
+    END
+
+    IDD_DIALOG_LOGIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 207
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 136
+    END
+
+    IDD_DIALOG_CONFIGPORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 218
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 124
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE 初始化失败。请确保 OLE 库是正确的版本。"
+END
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "CenterServer\n\nCenterServer\n\n\nCenterServer.Document\nCenterServer.Document"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "CenterServer"
+    AFX_IDS_IDLEMESSAGE     "就绪"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "创建新文档\n新建"
+    ID_FILE_OPEN            "打开现有文档\n打开"
+    ID_FILE_CLOSE           "关闭活动文档\n关闭"
+    ID_FILE_SAVE            "保存活动文档\n保存"
+    ID_FILE_SAVE_AS         "用新名称保存活动文档\n另存为"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "显示程序信息、版本号和版权\n关于"
+    ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "打开此文档"
+    ID_FILE_MRU_FILE2       "打开此文档"
+    ID_FILE_MRU_FILE3       "打开此文档"
+    ID_FILE_MRU_FILE4       "打开此文档"
+    ID_FILE_MRU_FILE5       "打开此文档"
+    ID_FILE_MRU_FILE6       "打开此文档"
+    ID_FILE_MRU_FILE7       "打开此文档"
+    ID_FILE_MRU_FILE8       "打开此文档"
+    ID_FILE_MRU_FILE9       "打开此文档"
+    ID_FILE_MRU_FILE10      "打开此文档"
+    ID_FILE_MRU_FILE11      "打开此文档"
+    ID_FILE_MRU_FILE12      "打开此文档"
+    ID_FILE_MRU_FILE13      "打开此文档"
+    ID_FILE_MRU_FILE14      "打开此文档"
+    ID_FILE_MRU_FILE15      "打开此文档"
+    ID_FILE_MRU_FILE16      "打开此文档"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
+    ID_PREV_PANE            "切换回上一个窗格\n上一窗格"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "将活动窗口拆分为多个窗格\n拆分"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "清除选定内容\n清除"
+    ID_EDIT_CLEAR_ALL       "清除全部内容\n全部清除"
+    ID_EDIT_COPY            "复制选定内容并将其放到剪贴板上\n复制"
+    ID_EDIT_CUT             "剪切选定内容并将其放到剪贴板上\n剪切"
+    ID_EDIT_FIND            "查找指定的文本\n查找"
+    ID_EDIT_PASTE           "插入剪贴板内容\n粘贴"
+    ID_EDIT_REPEAT          "重复上一操作\n重复"
+    ID_EDIT_REPLACE         "用其他文本替换特定的文本\n替换"
+    ID_EDIT_SELECT_ALL      "选定整个文档\n全选"
+    ID_EDIT_UNDO            "撤消上一操作\n撤消"
+    ID_EDIT_REDO            "恢复上次撤消的操作\n重做"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "显示或隐藏工具栏\n切换工具栏"
+    ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n切换状态栏"
+    ID_VIEW_AUTOARRANGE     "以网格方式排列图标。"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "更改窗口大小"
+    AFX_IDS_SCMOVE          "更改窗口位置"
+    AFX_IDS_SCMINIMIZE      "将窗口缩小为图标"
+    AFX_IDS_SCMAXIMIZE      "使窗口最大化显示"
+    AFX_IDS_SCNEXTWINDOW    "切换到下一个文档窗口"
+    AFX_IDS_SCPREVWINDOW    "切换到前一个文档窗口"
+    AFX_IDS_SCCLOSE         "关闭活动窗口并提示保存文档"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "将窗口恢复到正常大小"
+    AFX_IDS_SCTASKLIST      "激活任务列表"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_SMALLICON       "使用小图标显示各项。\n小图标"
+    ID_VIEW_LARGEICON       "使用大图标显示各项。\n大图标"
+    ID_VIEW_LIST            "以列表方式显示各项。\n列表"
+    ID_VIEW_DETAILS         "显示窗口中每一项的相关详细信息。\n详细信息"
+    ID_VIEW_LINEUP          "以网格方式排列图标。"
+    ID_VIEW_BYNAME          "按字母顺序对图标排序。"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_MYMENU_ADD           "添加就诊信息"
+    ID_MYMENU_MODIFY        "修改患者信息"
+    ID_MYMENU_DELETE        "删除患者信息"
+    ID_MYMENU_ADDNEW        "添加一个新的患者信息"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_MY_PATIENT           "患者信息列表"
+    ID_MY_DIAG              "显示就诊信息列表"
+    ID_MY_SEARCH            "超级搜索"
+END
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\CenterServer.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"          // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
